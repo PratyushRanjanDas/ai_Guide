@@ -1,0 +1,64 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model User {
+  id           String        @id @default(uuid())
+  name         String
+  email        String        @unique
+  password     String
+  timezone     String        @default("UTC")
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+  subjects     Subject[]
+  chatSessions ChatSession[]
+}
+
+model Subject {
+  id           String        @id @default(uuid())
+  name         String
+  color        String        @default("#4F46E5")
+  userId       String
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  chatSessions ChatSession[]
+}
+
+enum Role {
+  USER
+  ASSISTANT
+}
+
+
+
+model ChatSession {
+  id        String   @id @default(uuid())
+  title     String   @default("New Chat")
+  userId    String
+  subjectId String?
+  context   String?  @db.LongText
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  subject  Subject?  @relation(fields: [subjectId], references: [id], onDelete: SetNull)
+  messages Message[]
+}
+
+model Message {
+  id            String   @id @default(uuid())
+  chatSessionId String
+  role          Role
+  content       String   @db.Text
+  createdAt     DateTime @default(now())
+
+  chatSession ChatSession @relation(fields: [chatSessionId], references: [id], onDelete: Cascade)
+}
