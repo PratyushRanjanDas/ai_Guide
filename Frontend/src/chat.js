@@ -1,6 +1,7 @@
 import { marked } from 'marked';
 
 export async function initChat() {
+  const API_URL = import.meta.env.VITE_API_URL || '';
   console.log("Initializing Full-Screen Study Buddy with History...");
 
   const sendBtn = document.getElementById('send-btn');
@@ -65,7 +66,7 @@ export async function initChat() {
     const loadingId = appendMessage('assistant', `Extracting text from ${file.name}...`);
 
     try {
-      const res = await fetch(`/api/chat/${currentSessionId}/upload`, {
+      const res = await fetch(`${API_URL}/api/chat/${currentSessionId}/upload`, {
         method: 'POST',
         headers: { 'Authorization': `Bearer ${token}` },
         body: formData
@@ -154,7 +155,7 @@ export async function initChat() {
   
   async function fetchSessions() {
     try {
-      const res = await fetch('/api/chat', {
+      const res = await fetch(`${API_URL}/api/chat`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       sessions = await res.json();
@@ -182,7 +183,7 @@ export async function initChat() {
     messagesDiv.innerHTML = '<div class="message assistant"><strong>Study Buddy</strong><br/>Loading...</div>';
 
     try {
-      const res = await fetch(`/api/chat/${id}`, {
+      const res = await fetch(`${API_URL}/api/chat/${id}`, {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const sessionData = await res.json();
@@ -205,7 +206,7 @@ export async function initChat() {
 
   async function createNewSession() {
     try {
-      const res = await fetch('/api/chat', {
+      const res = await fetch(`${API_URL}/api/chat`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -230,7 +231,7 @@ export async function initChat() {
     const loadingId = appendMessage('assistant', '...');
 
     try {
-      const response = await fetch(`/api/chat/${currentSessionId}/messages`, {
+      const response = await fetch(`${API_URL}/api/chat/${currentSessionId}/messages`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -257,7 +258,7 @@ export async function initChat() {
         renderSessionList();
         
         // Persist new title to backend
-        fetch(`/api/chat/${currentSessionId}`, {
+        fetch(`${API_URL}/api/chat/${currentSessionId}`, {
           method: 'PATCH',
           headers: {
             'Content-Type': 'application/json',

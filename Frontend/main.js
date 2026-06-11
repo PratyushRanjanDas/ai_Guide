@@ -59,8 +59,10 @@ function renderAuth() {
     const endpoint = isLogin ? '/api/auth/login' : '/api/auth/register';
     const body = isLogin ? { email, password } : { name, email, password };
 
+    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5001';
+
     try {
-      const res = await fetch(`http://localhost:5001${endpoint}`, {
+      const res = await fetch(`${API_URL}${endpoint}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
