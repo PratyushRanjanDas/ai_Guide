@@ -2,7 +2,6 @@
 
 A highly interactive, AI-driven full-stack web application designed to act as a centralized, intelligent workspace for students. 
 
-![Project Interface](https://via.placeholder.com/800x450.png?text=AI+Study+Buddy+Interface)
 
 ## Overview
 Traditional digital learning tools often lack interactivity, forcing students to manually search through lengthy PDF documents to find answers. This project solves that by integrating a conversational AI tutor directly into your study workflow. 
