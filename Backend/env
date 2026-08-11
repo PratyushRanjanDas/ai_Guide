@@ -5,5 +5,5 @@
 # Prisma supports the native connection string format for PostgreSQL, MySQL, SQLite, SQL Server, MongoDB and CockroachDB.
 # See the documentation for all the connection string options: https://pris.ly/d/connection-strings
 
-DATABASE_URL="mysql://root:champ%402005@localhost:3306/aig_db"
-GEMINI_API_KEY="AIzaSyDwj63UXNzpzCTN5fE9iOfBjRpB8PbgjEo"
+DATABASE_URL="^_^"
+GEMINI_API_KEY="^_^"
